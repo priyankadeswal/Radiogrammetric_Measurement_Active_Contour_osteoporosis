@@ -1,0 +1,37 @@
+BM3D_ALGO
+I2=niblack(I3,[30 30], 0.01);
+imtool(I2,[])
+I4=imfill(I2);
+// to find inner edge use I2 or I4;
+imtool(I4,[])
+se=strel('disk',4);
+I5=imclose(I2,se);
+imtool(I5,[])
+se=strel('disk',2);
+I5=imclose(I2,se);
+I6=imfill(I5);
+//use I6 to find outer edge;
+imtool(I6,[])
+imtool(I5,[])
+I7=double(BW);
+I7=imfill(I7);
+//inner edge in I7;
+I8=double(BW1);
+I8=imfill(I8);
+//outer edge in I8;
+I9=xor(I7,I8);
+imtool(I9,[])
+//final image in I9. use this to find area and length of the bone;
+x=imread('11001_final.bmp');//having I9
+imtool(x,[]);
+y=im2bw(x);
+[p q]=find(y==1);
+min(p);
+l=min(p);
+u=max(p);
+l=u-l;//length of image;
+a=regionprops(x,'Area');
+b=a.area;
+b=a.Area;
+w=b/l
+//width of image;
